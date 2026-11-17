@@ -7,7 +7,7 @@ result AssetFurnace looks for: `<stem>_parts.glb` (body, wheels and doors as par
 pivots) or, with "One mesh", `<stem>_joined.glb`, as `<stem>.glb`, where the stem is the name of
 the run folder AssetFurnace made. The atlas and the other file stay beside it.
 
-    blender -b --factory-startup -P addon_build.py -- OUT_DIR PRESET ATLAS [JOINED]
+    blender -b --factory-startup -P addon_build.py -- OUT_DIR PRESET ATLAS [parts|joined]
 """
 
 import shutil
@@ -20,18 +20,18 @@ sys.path.insert(0, str(HERE))
 
 import shape_guide  # plain maths, no bpy
 
-YES = {"1", "true", "yes", "on"}
+JOINED = {"joined", "1", "true", "yes", "on"}
 
 
 def plan(argv: list[str]) -> tuple[Path, str, int, bool]:
     """(out_dir, preset, atlas, joined) from the arguments after Blender's `--`."""
     args = argv[argv.index("--") + 1:] if "--" in argv else argv
     if len(args) < 3:
-        raise SystemExit("usage: addon_build.py -- OUT_DIR PRESET ATLAS [JOINED]")
+        raise SystemExit("usage: addon_build.py -- OUT_DIR PRESET ATLAS [parts|joined]")
     out_dir, preset, atlas = Path(args[0]), args[1], int(args[2])
     if preset not in shape_guide.PRESETS:
         raise SystemExit(f"unknown vehicle {preset!r}; one of {', '.join(shape_guide.PRESETS)}")
-    joined = len(args) > 3 and args[3].strip().lower() in YES
+    joined = len(args) > 3 and args[3].strip().lower() in JOINED
     return out_dir, preset, atlas, joined
 
 

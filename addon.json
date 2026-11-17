@@ -46,9 +46,13 @@
           ]
         },
         {
-          "id": "joined",
-          "type": "toggle",
-          "label": "One mesh (no separate wheels and doors)"
+          "id": "mesh",
+          "type": "choice",
+          "label": "Parts or one mesh",
+          "choices": [
+            "parts",
+            "joined"
+          ]
         }
       ],
       "run": [
@@ -63,7 +67,7 @@
         "{out}",
         "{preset}",
         "{atlas}",
-        "{joined}"
+        "{mesh}"
       ],
       "makes": "glb"
     }

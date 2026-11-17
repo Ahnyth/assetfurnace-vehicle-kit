@@ -149,6 +149,7 @@ def test_the_add_on_entry_reads_its_arguments_after_blenders_separator():
     out, preset, atlas, joined = addon_build.plan(["blender", "-b", "--", "C:/out/run-1", "midibus_9m", "2048", "true"])
     assert (out.name, preset, atlas, joined) == ("run-1", "midibus_9m", 2048, True)
     assert addon_build.plan(["--", "o", "box_van", "1024"])[3] is False
-    assert addon_build.plan(["--", "o", "box_van", "1024", "false"])[3] is False
+    assert addon_build.plan(["--", "o", "box_van", "1024", "parts"])[3] is False
+    assert addon_build.plan(["--", "o", "box_van", "1024", "joined"])[3] is True
     with pytest.raises(SystemExit):
         addon_build.plan(["--", "o", "tram", "1024"])
