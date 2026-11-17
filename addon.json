@@ -25,23 +25,46 @@
           "id": "preset",
           "type": "choice",
           "label": "Vehicle",
-          "choices": ["bus_12m", "bus_12m_rule", "midibus_9m", "metro_car", "ambulance", "van_long", "box_van"]
+          "choices": [
+            "bus_12m",
+            "bus_12m_rule",
+            "midibus_9m",
+            "metro_car",
+            "ambulance",
+            "van_long",
+            "box_van"
+          ]
         },
         {
           "id": "atlas",
           "type": "choice",
           "label": "Atlas size (px)",
-          "choices": ["1024", "2048", "4096"]
+          "choices": [
+            "1024",
+            "2048",
+            "4096"
+          ]
         },
         {
           "id": "joined",
           "type": "toggle",
-          "label": "One mesh (no separate wheels and doors)",
-          "optional": true
+          "label": "One mesh (no separate wheels and doors)"
         }
       ],
-      "run": ["{blender}", "--background", "--factory-startup", "--python-exit-code", "1",
-              "--python", "addon_build.py", "--", "{out}", "{preset}", "{atlas}", "{joined}"],
+      "run": [
+        "{blender}",
+        "--background",
+        "--factory-startup",
+        "--python-exit-code",
+        "1",
+        "--python",
+        "addon_build.py",
+        "--",
+        "{out}",
+        "{preset}",
+        "{atlas}",
+        "{joined}"
+      ],
       "makes": "glb"
     }
   ]
