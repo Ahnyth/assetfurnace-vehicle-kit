@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "id": "vehicle-kit",
+  "name": "Vehicle kit",
+  "version": "0.1.0",
+  "author": {
+    "name": "Ahnyth",
+    "url": "https://github.com/Ahnyth"
+  },
+  "licence": "Apache-2.0",
+  "summary": "A detailed bus, metro car or van from a few numbers: body, wheels and doors as parts on their pivots, one atlas, no picture needed.",
+  "runs": "local",
+  "needs": {
+    "assetfurnace": ">=0.6.0",
+    "blender": ">=4.2"
+  },
+  "models": [],
+  "tools": [
+    {
+      "id": "build",
+      "label": "Build a vehicle",
+      "hint": "Pick a vehicle; the kit lays out its windows, doors, wheels and lights by rule and paints one atlas.",
+      "inputs": [
+        {
+          "id": "preset",
+          "type": "choice",
+          "label": "Vehicle",
+          "choices": ["bus_12m", "bus_12m_rule", "midibus_9m", "metro_car", "ambulance", "van_long", "box_van"]
+        },
+        {
+          "id": "atlas",
+          "type": "choice",
+          "label": "Atlas size (px)",
+          "choices": ["1024", "2048", "4096"]
+        },
+        {
+          "id": "joined",
+          "type": "toggle",
+          "label": "One mesh (no separate wheels and doors)",
+          "optional": true
+        }
+      ],
+      "run": ["{blender}", "--background", "--factory-startup", "--python-exit-code", "1",
+              "--python", "addon_build.py", "--", "{out}", "{preset}", "{atlas}", "{joined}"],
+      "makes": "glb"
+    }
+  ]
+}
