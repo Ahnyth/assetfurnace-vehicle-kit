@@ -3,7 +3,7 @@
 A detailed bus, metro car or van from a few numbers, no picture needed: the kit lays out the windows, doors,
 wheels and lights by rule, builds body, wheels and doors as parts on their pivots, and paints one atlas.
 
-![A box van and a metro car made with the kit](https://raw.githubusercontent.com/AssetFurnace/assetfurnace-addons/main/pictures/vehicle-kit.jpg)
+![A box van and a metro car made with the kit](pictures/vehicle-kit.jpg)
 
 Presets: `bus_12m`, `bus_12m_rule`, `midibus_9m`, `metro_car` (one Blender builder) and `ambulance`, `van_long`,
 `box_van` (the other). The result is the parts file (`<run>.glb`): body, wheels and doors as separate parts on their
