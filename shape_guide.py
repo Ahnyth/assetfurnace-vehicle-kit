@@ -127,6 +127,29 @@ def door_poles(doors: list[tuple[float, float]], x: float, front_limit: float) -
     return [(x, y) for y0, y1 in doors for y in (y0, y1) if y < front_limit]
 
 
+def fit_scale(pack, lo: float = 0.005, hi: float = 2.0, steps: int = 20):
+    """The largest scale in [lo, hi] at which `pack(scale)` returns a layout (anything but None), as (scale, layout).
+
+    The scale multiplies the atlas's base density, so the atlas size decides how low it has to go: a 9 m midibus on a
+    1024 atlas fits only at about a tenth of the 4096 density (a search that stopped at 0.3 found no layout there).
+    Raises ValueError when not even `lo` fits.
+    """
+    best = None
+    for _ in range(steps):
+        mid = (lo + hi) / 2
+        layout = pack(mid)
+        if layout is None:
+            hi = mid
+        else:
+            lo, best = mid, (mid, layout)
+    if best is None:
+        layout = pack(lo)
+        if layout is None:
+            raise ValueError("the vehicle's parts do not fit this atlas even at the lowest density: pick a larger atlas")
+        best = (lo, layout)
+    return best
+
+
 def family_of(preset: str) -> str:
     """The family (and so the Blender builder) a preset belongs to."""
     if preset not in PRESETS:

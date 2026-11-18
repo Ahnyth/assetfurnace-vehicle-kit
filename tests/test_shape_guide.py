@@ -153,3 +153,24 @@ def test_the_add_on_entry_reads_its_arguments_after_blenders_separator():
     assert addon_build.plan(["--", "o", "box_van", "1024", "joined"])[3] is True
     with pytest.raises(SystemExit):
         addon_build.plan(["--", "o", "tram", "1024"])
+
+
+def test_the_atlas_density_search_goes_low_enough_for_a_small_atlas():
+    # a 9 m midibus on a 1024 atlas fits only at about a tenth of the 4096 density; a search that stopped at 0.3 found
+    # no layout there and the run failed
+    def pack(scale):
+        return ("layout", scale) if scale <= 0.07 else None
+
+    scale, layout = sg.fit_scale(pack)
+    assert 0.069 < scale <= 0.07
+    assert layout == ("layout", scale)
+
+
+def test_the_atlas_density_search_keeps_the_largest_scale_that_fits():
+    scale, _ = sg.fit_scale(lambda s: s if s <= 1.3 else None)
+    assert 1.299 < scale <= 1.3
+
+
+def test_an_atlas_too_small_for_any_layout_says_so():
+    with pytest.raises(ValueError, match="larger atlas"):
+        sg.fit_scale(lambda s: None)

@@ -891,18 +891,18 @@ def maxrects_pack(sizes, wb, hb):
 
 def pack_islands(isl):
     L = list(isl.values())
-    lo, hi = 0.3, 2.0
-    best = None
-    for _ in range(14):
-        mid = (lo + hi) / 2
-        sizes = [I.size(mid)[:2] for I in L]
+    sys.path.insert(0, HERE)
+    import shape_guide as sg  # the density search, tested without Blender
+
+    def pack(scale):
+        sizes = [I.size(scale)[:2] for I in L]
         res = maxrects_pack(sizes, TEX, TEX)
-        if res is None:
-            hi = mid
-        else:
-            lo = mid
-            best = (mid, res, sizes)
-    scale, res, sizes = best
+        return None if res is None else (res, sizes)
+
+    try:
+        scale, (res, sizes) = sg.fit_scale(pack)
+    except ValueError as err:
+        raise SystemExit(f"{err} (atlas {TEX} px)")
     for I, (x, y), (w, h) in zip(L, res, sizes):
         I.x, I.y, I.w, I.h = x, y, w, h
         I.ppm = BASE_PPM * I.dens * scale
