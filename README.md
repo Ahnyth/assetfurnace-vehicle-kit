@@ -22,7 +22,7 @@ pivots, so a game can turn the wheels and open the doors. "One mesh" gives the j
 In the studio: Add-ons, Vehicle kit, Build a vehicle. From the command line:
 
     ./lab addon add --unlisted https://github.com/Ahnyth/assetfurnace-vehicle-kit@<commit>
-    ./lab addon run vehicle-kit build --preset midibus_9m --atlas 2048 --mesh parts
+    ./lab addon run vehicle-kit build --input preset=midibus_9m --input atlas=2048 --input mesh=parts
 
 The layout maths is tested without Blender: `python -m pytest tests`.
 
